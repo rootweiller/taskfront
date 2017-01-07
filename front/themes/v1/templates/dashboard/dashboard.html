@@ -1,0 +1,74 @@
+{% extends "dashboard/base.html" %}
+
+
+
+
+{% block container %}
+
+
+	<div class="container">
+
+	<div class="title-dash">
+		<h1>Welcome {{ user.username }}</h1>
+	</div>
+
+{% if request.user.is_staff == True %}
+
+	{% if users %}
+	<div class="row">
+		<div class="span5">
+            <table class="table table-striped table-condensed">
+                  <thead>
+
+                  {% for e in users %}
+                  <tr>
+                      <th>Username</th>
+                      <th>Date registered</th>
+                      <th>Role</th>
+                      <th>Status</th>                                          
+                  </tr>
+              </thead>   
+              <tbody>
+                <tr>
+                    <td>{{ e.username}}</td>
+                    <td>{{ e.created_at }}</td>
+                    <td>{{ e.role }}</td>
+                    <td><span class="label label-success">{{ e.is_active}}</span>
+                    </td>                                       
+                </tr>
+                {% endfor %}             
+              </tbody>
+            </table>
+            </div>
+	</div>
+
+	<div class="row">
+		<div class="span5">
+
+			<a href="{% url 'RegisterUser' %}" class="btn btn-success btn-large">Registro de Perfiles</a>
+			<a href="{% url 'RolAdd' %}" class="btn btn-success btn-large">Registro de Rol</a>
+		</div>
+	</div>
+	{% else %}
+
+		<div class="alert alert-info">
+			<h1>No hay usuarios registrados en el sistema</h1>
+		</div>
+	{% endif %}
+
+{% else %}
+
+
+	<div class="row">
+
+		<div class="span5">
+
+			{% include "dashboard/partials/panels.html" %}
+		
+		</div>
+	</div>
+
+{% endif %}
+</div>
+
+{% endblock %}
