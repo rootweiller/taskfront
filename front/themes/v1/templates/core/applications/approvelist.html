@@ -1,0 +1,44 @@
+{% extends "dashboard/base.html" %}
+
+
+
+{% block container %}
+
+
+
+<div class="container">
+
+  <div class="title-dash">
+    <h1>Welcome {{ user.username }}</h1>
+  </div>
+
+	<div class="row">
+		<div class="span5">
+            <table class="table table-striped table-condensed">
+                  <thead>
+
+                  {% for e in listall %}
+                  <tr>
+                      <th>Approve by</th>
+                      <th>Date registered</th>
+                      <th>Applications</th>
+                      <th>Comments</th>
+                      <th>User Registered</th>                                                 
+                  </tr>
+              </thead>   
+              <tbody>
+                <tr>
+                    <td>{{ e.user}}</td>
+                    <td>{{ e.datecreated }}</td>
+                    <td>{{ e.applications }}</td>
+                    <td>{{ e.comments }}</td>
+                    <td><span class="label label-success">{{ e.status}}</span>
+                    </td>                                       
+                </tr>
+                {% endfor %}             
+              </tbody>
+            </table>
+            </div>
+	</div>
+
+{% endblock %}

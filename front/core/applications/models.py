@@ -42,6 +42,9 @@ class Applications(models.Model):
 		return self.job_position
 
 
+BOOL_CHOICES = (
+	(True, 'Approve'),
+	(False, 'Rejected'))
 
 
 class ApplicationsMV(models.Model):
@@ -51,6 +54,8 @@ class ApplicationsMV(models.Model):
 	status = models.BooleanField(default=False)
 	comments = models.CharField(max_length=400, blank=True, null=True)
 	datecreated = models.DateTimeField(auto_now_add=True)
+
+
 
 	def __unicode__(self):
 

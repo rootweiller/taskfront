@@ -1,0 +1,22 @@
+{% extends "dashboard/base.html" %}
+
+
+{% block container %}
+
+<div class="container">
+
+  <div class="title-dash">
+    <h1>Welcome {{ user.username }}</h1>
+  </div>
+<form method="POST" action="">
+	{% csrf_token %}
+		{{ form.as_p }}
+
+		{{ form.errors }}
+		<input type="submit" class="btn btn-success" value="GUARDAR">
+
+</form>
+
+</div>
+
+{% endblock %}

@@ -127,3 +127,58 @@ class WorkFormAdd(forms.Form):
 
 		Type.user = self.user
 		Type.save()
+
+
+
+class ApplyApproveForm(forms.Form):
+
+
+	BOOL_CHOICES = (
+		(True, 'Approve'),
+		(False, 'Rejected')
+	)
+
+	applications = forms.ModelChoiceField(
+		queryset = Applications.objects.all(),
+		label = "Aplicaciones por Aprobar",
+		widget = forms.Select(
+			attrs = {
+			'class': 'btn btn-success dropdown-toogle'
+			}))
+	
+	status = forms.BooleanField(
+		label="Aprobar o Rechazar",
+		widget=forms.CheckboxInput())
+	
+	comments = forms.CharField(
+		max_length=400,
+		label="",
+		widget=forms.Textarea(
+			attrs={
+			'cols': 80,
+			'rows': 20}))
+
+
+	def clean(self):
+
+		if self.cleaned_data.get('status', False):
+
+			self.fields['comments'].required=True,
+			self.fields['applications'].required=True,
+
+			self._clean_fields()
+
+		return self.cleaned_data
+
+
+
+	def save(self):
+
+		Profile = ApplicationsMV (
+			applications = self.cleaned_data['applications'],
+			status = self.cleaned_data['status'],
+			comments = self.cleaned_data['comments'],
+		)
+
+		Profile.user = self.user
+		Profile.save()
